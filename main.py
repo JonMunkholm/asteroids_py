@@ -3,6 +3,8 @@ from constants import SCREEN_HEIGHT, SCREEN_WIDTH, ASTEROID_MAX_RADIUS, ASTEROID
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+import sys
+from shot import Shot
 
 def main():
     print("Starting Asteroids!")
@@ -13,10 +15,12 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    hellfire = pygame.sprite.Group()
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (updatable, drawable, hellfire)
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
@@ -34,6 +38,10 @@ def main():
             canva.draw(screen)
         for render in updatable:
             render.update(dt)
+        for asteroid in asteroids:
+            if(player.colisions(asteroid)):
+                print("Game over!")
+                sys.exit()
         pygame.display.flip()
         dt =  clock.tick(60) / 1000
 
