@@ -46,7 +46,7 @@ def main():
             for bullet in hellfire:
                 if(bullet.colisions(asteroid)):
                     bullet.kill()
-                    asteroid.kill()
+                    asteroid.split()
         pygame.display.flip()
         dt =  clock.tick(60) / 1000
 
